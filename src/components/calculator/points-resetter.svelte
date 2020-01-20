@@ -1,7 +1,10 @@
 <script>
-  import { pointsRemaining } from '../../stores/stats';
+  import { stats } from '../../stores/stats';
   function handleReset() {
-    pointsRemaining.update(DEFAULT_POINT_COUNT);
+    stats.forEach(storeTuple => {
+      const [name, store] = storeTuple;
+      store.reset();
+    });
   }
 </script>
 

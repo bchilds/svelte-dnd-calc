@@ -9,9 +9,6 @@ import { writable, derived } from 'svelte/store';
 // better validation/point cost method would be to upload a pointbuy scheme
 // but I'm going to disregard that for this example
 
-// points should be a derived store from stats
-export const pointsRemaining = writable(DEFAULT_POINT_COUNT);
-
 function validateStatValue(stat) {
   console.log(stat)
 
@@ -56,3 +53,19 @@ export const stats = [
   ['INT', INT],
   ['CHR', CHR],
 ]
+
+
+// points should be a derived store from stats and schema
+// normally get schema, but for example just using default schema
+export const pointsRemaining = derived(
+  [STR, DEX, CON, WIS, INT, CHR],
+  ([$STR, $DEX, $CON, $WIS, $INT, $CHR]) =>
+    DEFAULT_POINT_COUNT
+    - defaultPointBuySchema[$STR]
+    - defaultPointBuySchema[$DEX]
+    - defaultPointBuySchema[$CON]
+    - defaultPointBuySchema[$WIS]
+    - defaultPointBuySchema[$INT]
+    - defaultPointBuySchema[$CHR]
+);
+
